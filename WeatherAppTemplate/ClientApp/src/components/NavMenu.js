@@ -1,42 +1,110 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import styled from "styled-components";
 import './NavMenu.css';
+import { FaSearch } from "react-icons/fa";
+import { HiHome } from "react-icons/hi";
 
 export class NavMenu extends Component {
-  static displayName = NavMenu.name;
 
-  constructor (props) {
-    super(props);
-
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
-  }
-
-  toggleNavbar () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
 
   render() {
     return (
-      <header>
-            <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-                <NavbarBrand tag={Link} to="/"><img alt="WeatherApp Logo" src="/Bilder/Weather360logo.png" height="100"></img></NavbarBrand>
-                <NavLink tag={Link} className="text-dark" to="/"><input className="suche" type="search" placeholder="Geben Sie einen Ort ein!"></input></NavLink>
-                <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="flex" isOpen={!this.state.collapsed} navbar>
-            <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-              </NavItem>
-            </ul>
-          </Collapse>
+        <Navbar>
+          <Header>
+                <Flex>
+                    <Logo src="/Bilder/Weather360logo.png" width="95"></Logo>
+                    <Wrap>
+                    <Search>
+                            <SearchTerm id="search" type="search" autofocus required placeholder="Geben Sie einen Ort ein!"></SearchTerm>
+                            <Button type="submit" class="searchButton">
+                                <FaSearch />
+                            </Button>         
+                        </Search>
+                    </Wrap>
+                    <Home><HiHome size={32} color="#3B69DE" /></Home>
+                </Flex>
+            </Header>
         </Navbar>
-      </header>
     );
   }
 }
+
+export default NavMenu;
+
+
+const Header = styled.div`
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    
+`
+
+const Navbar = styled.div`
+    width: 100%;
+    height: 100px;
+    position: sticky;
+    top: 0;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+`
+
+const Flex = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    align-items: center;
+`
+
+const Logo = styled.img`
+    align-items: center;
+    box-shadow: 0px 6px 5px #ccc;
+    border-radius:190px;
+`
+
+const Wrap = styled.div`
+    width: 40%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ `
+
+const Search = styled.div`
+    width: 100%;
+    position: relative;
+    display: flex;  
+`
+
+const Button = styled.div`
+    width: 40px;
+    height: 36px;
+    border: 0.5px solid #3B69DE;
+    background: #3B69DE;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+`
+
+const SearchTerm = styled.input`
+    width: 100%;
+    border: 2px solid #3B69DE;
+    border-right: none;
+    height: 20px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+    height: 36px;
+
+    &:focus{
+         color: #00B4CC;
+    }
+`
+
+const Home = styled.div`
+    text-align: center;
+`
