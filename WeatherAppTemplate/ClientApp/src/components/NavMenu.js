@@ -1,14 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import styled from "styled-components";
 import './NavMenu.css';
 import { FaSearch } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
+import axios from 'axios';
 
-export class NavMenu extends Component {
+const NavMenu = () => {
+    const [searchQuery, setSearchQuery] = useState('');
 
+    const handleSearch = () => {
+        // Redirect the user to the weather page with the search query as a parameter
+        window.location.href = `/dashboard/${searchQuery}`;
+    };
 
-  render() {
     return (
         <Navbar>
           <Header>
@@ -16,8 +21,8 @@ export class NavMenu extends Component {
                     <Logo src="/Bilder/Weather360logo.png" width="95"></Logo>
                     <Wrap>
                     <Search>
-                            <SearchTerm id="search" type="search" autofocus required placeholder="Geben Sie einen Ort ein!"></SearchTerm>
-                            <Button type="submit" class="searchButton">
+                            <SearchTerm type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} id="search" placeholder="Geben Sie einen Ort ein!"></SearchTerm>
+                            <Button onClick={handleSearch} type="submit" class="searchButton">
                                 <FaSearch />
                             </Button>         
                         </Search>
@@ -28,7 +33,7 @@ export class NavMenu extends Component {
         </Navbar>
     );
   }
-}
+
 
 export default NavMenu;
 

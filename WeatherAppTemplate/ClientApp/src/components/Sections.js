@@ -63,4 +63,5 @@ const Box = styled.img`
     @media only screen and (max-width: 1250px) {
     width: ${100/3}%;
 }
+cursor: pointer;
 `

@@ -12,7 +12,7 @@ const Footer = () => {
                         Partners:
                     </Partner>
                     <Image src="/Bilder/hfu.png" alt="HFU" height="60" />
-                    <Image src="/Bilder/Mhplogo.png" alt="MHP" height="60" />
+                    <Image src="/Bilder/Mhplogo.jpg" alt="MHP" height="60" />
                 </Flex2>
             </Flex>
         </Container>
@@ -59,7 +59,7 @@ const Partner = styled.div`
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
-
+    color: white;
 `
 const AppName = styled.div`
     text-align: center;
@@ -67,11 +67,13 @@ const AppName = styled.div`
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
+    color: white;
 `
 
 const Image = styled.img`
     align-items: center;
     box-shadow: 0px 6px 5px #ccc;
     border-radius:10px;
-    object-fit: contain;
+    object-fit: cover;
+    width: 120px;
 `
