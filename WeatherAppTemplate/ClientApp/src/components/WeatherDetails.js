@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import NavMenu from "./NavMenu";
-import Canvas from "./Canvas";
+import Canvas from "./CanvasInsel";
 import Footer from "./Footer";
 import styled from "styled-components";
 
