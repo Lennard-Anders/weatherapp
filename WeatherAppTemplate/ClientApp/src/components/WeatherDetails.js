@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import NavMenu from "./NavMenu";
-import Canvas from "./CanvasInsel";
 import Footer from "./Footer";
 import styled from "styled-components";
+import CanvasSunny from './CanvasSunny';
+import CanvasRainy from './CanvasRainy';
+import CanvasCloudy from './CanvasCloudy';
+import { VscCircleSmall } from "react-icons/vsc";
 
 const WeatherDetails = () => {
     const { searchQuery } = useParams();
+    const [weatherType, setWeatherType] = useState(1);
 
     useEffect(() => {
         const fetchWeatherData = async () => {
@@ -15,6 +19,7 @@ const WeatherDetails = () => {
                 const response = await axios.get(`API_ENDPOINT/${searchQuery}`);
                 const data = response.data;
                 console.log(data); // Do something with the weather data
+                setWeatherType(data.weatherType); 
             } catch (error) {
                 console.error('Error fetching weather data:', error);
             }
@@ -22,6 +27,101 @@ const WeatherDetails = () => {
 
         fetchWeatherData();
     }, [searchQuery]);
+
+    const renderWeatherCanvas = () => {
+        switch (weatherType) {
+            case 1:
+                return <CanvasSunny />;
+            case 2:
+                return <CanvasSunny />;
+            case 3:
+                return <CanvasSunny />;
+            case 4:
+                return <CanvasSunny />;
+            case 5:
+                return <CanvasSunny />;
+            case 6:
+                return <CanvasSunny />;
+            case 7:
+                return <CanvasCloudy />;
+            case 8:
+                return <CanvasCloudy />;
+            case 9:
+                return <CanvasCloudy />;
+            case 10:
+                return <CanvasCloudy />;
+            case 11:
+                return <CanvasCloudy />;
+            case 12:
+                return <CanvasRainy />;
+            case 13:
+                return <CanvasRainy />;
+            case 14:
+                return <CanvasRainy />;
+            case 15:
+                return <CanvasRainy />;
+            case 16:
+                return <CanvasRainy />;
+            case 17:
+                return <CanvasRainy />;
+            case 18:
+                return <CanvasRainy />;
+            case 19:
+                return <CanvasCloudy />;
+            case 20:
+                return <CanvasSunny />;
+            case 21:
+                return <CanvasSunny />;
+            case 22:
+                return <CanvasCloudy />;
+            case 23:
+                return <CanvasRainy />;
+            case 24:
+                return <CanvasRainy />;
+            case 25:
+                return <CanvasRainy />;
+            case 26:
+                return <CanvasRainy />;
+            case 27:
+                return <CanvasRainy />;
+            case 28:
+                return <CanvasRainy />;
+            case 29:
+                return <CanvasRainy />;
+            case 30:
+                return <CanvasSunny />;
+            case 31:
+                return <CanvasRainy />;
+            case 32:
+                return <CanvasCloudy />;
+            case 33:
+                return <CanvasCloudy />;
+            case 34:
+                return <CanvasCloudy />;
+            case 35:
+                return <CanvasCloudy />;
+            case 36:
+                return <CanvasCloudy />;
+            case 37:
+                return <CanvasCloudy />;
+            case 38:
+                return <CanvasCloudy />;
+            case 39:
+                return <CanvasRainy />;
+            case 40:
+                return <CanvasRainy />;
+            case 41:
+                return <CanvasRainy />;
+            case 42:
+                return <CanvasRainy />;
+            case 43:
+                return <CanvasRainy />;
+            case 44:
+                return <CanvasRainy />;
+            default:
+                return <CanvasCloudy />;
+        }
+    };
 
     return (
         <div>
@@ -55,14 +155,15 @@ const WeatherDetails = () => {
             <PositionCelsius>
                 <Flex>
                     <Celsius>31</Celsius>
-                    <LittleCelsius>°C</LittleCelsius>
+                    <LittleCel><VscCircleSmall size={50} color="white"/></LittleCel>
+                    <LittleCelsius>C</LittleCelsius>
                 </Flex>
             </PositionCelsius>
             <PositionDay>
                 <Day>Mo</Day>
             </PositionDay>
             <PositionCanvas>
-                Canvas
+                {renderWeatherCanvas()}
             </PositionCanvas>
             <PositionDayInformation>
                 <Flex>
@@ -164,10 +265,15 @@ const Celsius = styled.div`
 `
 
 const LittleCelsius = styled.div`
-    padding-top: 30px;
+    padding-top: 42px;
+    margin-left: -15px;
     color: white;
-    font-size: 30px;
+    font-size: 35px;
     font-weight: 300;
+    font-family: sans-serif !important;
+`
+
+const LittleCel = styled.div`
 `
 
 const PositionDay = styled.div`
@@ -187,9 +293,18 @@ const Day = styled.div`
 
 const PositionCanvas = styled.div`
     position: absolute;
-    top: 370px;
+    top: -120px;
+    left: -65px;
     align-items: center;
     padding: 30px;
+
+    @media only screen and (max-width: 1400px) {
+        position: absolute;
+        top: 200px;
+        left: -20px;
+        align-items: center;
+        padding: 30px;
+    }
 `
 
 const PositionDayInformation = styled.div`

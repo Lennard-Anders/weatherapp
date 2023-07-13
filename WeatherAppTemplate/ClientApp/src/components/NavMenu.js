@@ -15,7 +15,7 @@ const NavMenu = () => {
             });
 
         // Redirect the user to the weather page with the search query as a parameter
-        window.location.href = `/dashboard/${searchQuery}`;
+        // window.location.href = `/dashboard/${searchQuery}`;
     };
 
     return (
