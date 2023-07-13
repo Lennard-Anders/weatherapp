@@ -8,14 +8,14 @@ const NavMenu = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleSearch = () => {
-        // Redirect the user to the weather page with the search query as a parameter
-        window.location.href = `/dashboard/${searchQuery}`;
-
         axios.post('api/mycontroller/myaction', searchQuery)
             .then(response => console.log(response.searchQuery))
             .catch((error) => {
                 console.error('Error:', error);
             });
+
+        // Redirect the user to the weather page with the search query as a parameter
+        window.location.href = `/dashboard/${searchQuery}`;
     };
 
     return (
