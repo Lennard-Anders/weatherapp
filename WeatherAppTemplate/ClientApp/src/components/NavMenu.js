@@ -11,15 +11,8 @@ const NavMenu = () => {
         // Redirect the user to the weather page with the search query as a parameter
         window.location.href = `/dashboard/${searchQuery}`;
 
-        fetch('api/mycontroller/myaction', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(searchQuery)
-        })
-            .then(response => response.json())
-            .then(searchQuery => console.log(searchQuery))
+        axios.post('api/mycontroller/myaction', data)
+            .then(response => console.log(response.data))
             .catch((error) => {
                 console.error('Error:', error);
             });
