@@ -2,9 +2,7 @@ import React, { Component, Suspense } from 'react';
 import styled from "styled-components";
 import { Canvas } from 'react-three-fiber';
 import { OrbitControls } from '@react-three/drei';
-import Insel from "./Insel";
 import { Earth } from "./Earth/index";
-import { TopSection } from "./TopSection/index";
 
 const CanvasContainer = styled.div`
   width: 100%;
@@ -15,8 +13,10 @@ const CanvasContainer = styled.div`
 export default function CanvasInsel() {
     return (
         <CanvasContainer>
-            <TopSection />
             <Canvas>
+                <OrbitControls />
+                <directionalLight intensity={0.5} />
+                <ambientLight intensity={0.2} />
                 <Suspense fallback={null}>
                     <Earth />
                 </Suspense>

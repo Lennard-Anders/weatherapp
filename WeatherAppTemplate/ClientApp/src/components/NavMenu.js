@@ -1,7 +1,5 @@
 import React, { Component, useState } from 'react';
-// import { Link } from 'react-router-dom';
 import styled from "styled-components";
-import './NavMenu.css';
 import { FaSearch } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import axios from 'axios';
