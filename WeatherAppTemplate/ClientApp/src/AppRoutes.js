@@ -1,6 +1,6 @@
-import { Counter } from "./components/Counter";
-import { FetchData } from "./components/FetchData";
+import Error from "./components/Error";
 import { Home } from "./components/Home";
+import WeatherDetail from "./components/WeatherDetail";
 
 const AppRoutes = [
   {
@@ -8,13 +8,13 @@ const AppRoutes = [
     element: <Home />
   },
   {
-    path: '/counter',
-    element: <Counter />
+    path: '/dashboard',
+    element: <WeatherDetail />
   },
   {
-    path: '/fetch-data',
-    element: <FetchData />
-  }
+    path: '/error',
+    element: <Error />
+  },
 ];
 
 export default AppRoutes;

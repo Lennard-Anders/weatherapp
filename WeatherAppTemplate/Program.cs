@@ -1,8 +1,29 @@
+using WeatherAppTemplate.Configurations;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient("AccuWeatherClient", client =>
+{
+    var config = builder.Configuration.GetSection("AccuWeatherApiConfig").Get<AccuWeatherApiConfig>();
+
+    client.BaseAddress = new Uri(config.BaseUrl);
+});
+
+// Configure CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder
+            .WithOrigins("https://localhost:44492")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
 
 var app = builder.Build();
 
@@ -14,9 +35,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Use the CORS policy
+app.UseCors("AllowSpecificOrigin");
+
 app.UseStaticFiles();
 app.UseRouting();
-
 
 app.MapControllerRoute(
     name: "default",
@@ -25,3 +49,4 @@ app.MapControllerRoute(
 app.MapFallbackToFile("index.html"); ;
 
 app.Run();
+
