@@ -1,5 +1,5 @@
 import { Home } from "./components/Home";
-import WeatherDetails from "./components/WeatherDetails";
+import WeatherDetail from "./components/WeatherDetail";
 
 const AppRoutes = [
   {
@@ -8,7 +8,7 @@ const AppRoutes = [
   },
   {
     path: '/dashboard',
-    element: <WeatherDetails />
+    element: <WeatherDetail />
   },
 ];
 

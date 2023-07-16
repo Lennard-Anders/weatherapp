@@ -3,19 +3,28 @@ import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const NavMenu = () => {
+    const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
 
-    const handleSearch = () => {
-        axios.post('api/mycontroller/myaction', searchQuery)
-            .then(response => console.log(response.searchQuery))
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+    const getWeatherForCity = async (city) => {
+        try {
+            const response = await axios.get(`https://localhost:7210/api/Weather/GetWeatherForCity?city=${city}`);
 
-        // Redirect the user to the weather page with the search query as a parameter
-        // window.location.href = `/dashboard/${searchQuery}`;
+            return response.data;
+        } catch (error) {
+            console.error('Fehler beim Abrufen der Wetterdaten:', error);
+            return null;
+        }
+    };
+
+    const handleSearch = async () => {
+        const data = await getWeatherForCity(searchQuery);
+        console.log(data);
+        navigate(`/dashboard`, { state: { weatherData: data } });
+        // navigate(`/dashboard/${searchQuery}`, { state: { weatherData: data } });
     };
 
     return (
@@ -58,6 +67,10 @@ const Navbar = styled.div`
     z-index: 9999;
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
+
+    @media only screen and (max-width: 600px) {
+        height: 80px;
+    }
 `
 
 const Flex = styled.div`
@@ -71,6 +84,10 @@ const Logo = styled.img`
     align-items: center;
     box-shadow: 0px 6px 5px #ccc;
     border-radius:190px;
+        
+    @media only screen and (max-width: 600px) {
+        width: 75px;
+    }
 `
 
 const Wrap = styled.div`
@@ -111,6 +128,12 @@ const SearchTerm = styled.input`
 
     &:focus{
          color: #00B4CC;
+    }
+
+    
+    @media only screen and (max-width: 600px) {
+        font-size: 10px;
+        color: gray
     }
 `
 

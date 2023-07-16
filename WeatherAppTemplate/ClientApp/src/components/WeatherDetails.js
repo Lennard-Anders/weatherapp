@@ -8,8 +8,11 @@ import CanvasSunny from './CanvasSunny';
 import CanvasRainy from './CanvasRainy';
 import CanvasCloudy from './CanvasCloudy';
 import { VscCircleSmall } from "react-icons/vsc";
+import { useLocation } from 'react-router-dom';
 
 const WeatherDetails = () => {
+    const location = useLocation();
+    const weatherData = location.state.weatherData;
     const { searchQuery } = useParams();
     const [weatherType, setWeatherType] = useState(1);
 
@@ -124,89 +127,68 @@ const WeatherDetails = () => {
     };
 
     return (
+        <>
         <div>
-            <NavMenu />
+            <Farbe>
             <Image src="/Bilder/WeatherDetail.png" />
             <Div>
-                <Flex>
-                    <City>London</City>
-                    <Flex2>
+                 <FlexingRow>
+                    <AnotherFlex>
+                        <FlexValue>
+                                <City>London</City>
+                                <Celsius>31
+                                    <VscCircleSmall size={50} color="black" />
+                                C</Celsius>
+                        </FlexValue>
+                        <Day>Monday</Day>
+                    </AnotherFlex>
+                 <Section>Weather details</Section>
+                 <FlexingCol>
+                    <Information>
+                        Wind
+                    </Information>
+                    <Information>
+                        Humidity
+                    </Information>
+                    <Information>
+                        Dew Point
+                    </Information>
+                    <Information>
+                        Pressure
+                    </Information>
+                    <Information>
+                        UV Index
+                    </Information>
+                    <Information>
+                        Moon Phase
+                    </Information>
+                 </FlexingCol>
+                 <Section>Weather in the next days</Section>
+                 <FlexingCol2>
                         <Information>
-                            Wind
+                            Tomorrow
                         </Information>
                         <Information>
-                            Humidity
+                            17.07.23
                         </Information>
                         <Information>
-                            Dew Point
+                            18.07.23
                         </Information>
                         <Information>
-                            Pressure
+                            19.07.23
                         </Information>
                         <Information>
-                            UV Index
+                            20.07.23
                         </Information>
-                        <Information>
-                            Moon Phase
-                        </Information>
-                    </Flex2>
-                </Flex>
+                 </FlexingCol2>
+                </FlexingRow>
             </Div>
-            <PositionCelsius>
-                <Flex>
-                    <Celsius>31</Celsius>
-                    <LittleCel><VscCircleSmall size={50} color="white"/></LittleCel>
-                    <LittleCelsius>C</LittleCelsius>
-                </Flex>
-            </PositionCelsius>
-            <PositionDay>
-                <Day>Mo</Day>
-            </PositionDay>
             <PositionCanvas>
                 {renderWeatherCanvas()}
             </PositionCanvas>
-            <PositionDayInformation>
-                <Flex>
-                    <DaysInfo>Mon</DaysInfo>
-                    <DaysInfo>Tue</DaysInfo>
-                    <DaysInfo>Wed</DaysInfo>
-                    <DaysInfo>Thu</DaysInfo>
-                    <DaysInfo>Fri</DaysInfo>
-                    <DaysInfo>Sat</DaysInfo>
-                    <DaysInfo>Sun</DaysInfo>
-                </Flex>
-            </PositionDayInformation>
-            <Details>Details</Details>
-            <PositionDetails>
-                <Flex>
-                    <HourInfo>1am</HourInfo>
-                    <HourInfo>2am</HourInfo>
-                    <HourInfo>3am</HourInfo>
-                    <HourInfo>4am</HourInfo>
-                    <HourInfo>5am</HourInfo>
-                    <HourInfo>6am</HourInfo>
-                    <HourInfo>7am</HourInfo>
-                    <HourInfo>8am</HourInfo>
-                    <HourInfo>9am</HourInfo>
-                    <HourInfo>10am</HourInfo>
-                    <HourInfo>11am</HourInfo>
-                    <HourInfo>12pm</HourInfo>
-                    <HourInfo>1pm</HourInfo>
-                    <HourInfo>2pm</HourInfo>
-                    <HourInfo>3pm</HourInfo>
-                    <HourInfo>4pm</HourInfo>
-                    <HourInfo>5pm</HourInfo>
-                    <HourInfo>6pm</HourInfo>
-                    <HourInfo>7pm</HourInfo>
-                    <HourInfo>8pm</HourInfo>
-                    <HourInfo>9pm</HourInfo>
-                    <HourInfo>10pm</HourInfo>
-                    <HourInfo>11pm</HourInfo>
-                    <HourInfo>12am</HourInfo>
-                </Flex>
-            </PositionDetails>
-            <Footer />
-        </div>
+            </Farbe>
+            </div>
+        </>
     )
 };
 
@@ -216,6 +198,11 @@ const Image = styled.img`
     background-image: url("/Bilder/WeatherDetail.png");
     width: 100%;
     height: auto;
+    background-size:cover;
+
+    @media only screen and (max-width: 1400px) {
+        display: none
+    }
 `
 
 const Div = styled.div`
@@ -223,124 +210,144 @@ const Div = styled.div`
     top: 150px;
     width: 100%;
 `
+
+const Farbe = styled.div`
+    @media only screen and (max-width: 1400px) {
+        background: #7AA8B2;
+        width: 100%;
+        height: 182vh;
+    }
+`
+
 const City = styled.div`
-    color: white;
+    color: black;
     font-size: 30px;
     font-weight: 500;
 `
 
-const Information = styled.div`
-    color: white;
-    font-size: 24px;
-    font-weight: 300;
+const FlexValue = styled.div`
+    flex: 1;
 `
 
-const Flex = styled.div`
+const Information = styled.div`
+    color: black;
+    font-size: 21px;
+    font-weight: 400;
+    width: 100%;
+    height: 220px;
+    border-radius: 15px;
+    background-color: rgba(255,255,255,0.8);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding-top: 5px;
+
+    @media only screen and (max-width: 1400px) {
+        width: 200px;
+    }
+    @media only screen and (max-width: 600px) {
+        width: 150px;
+    }
+`
+
+const FlexingRow = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     padding: 0 30px;
     align-items: center;
 `
 
-const Flex2 = styled.div`
+const FlexingCol = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 0 30px;
+    padding-top: 75px;
     gap: 60px;
     align-items: center;
     text-align: center;
+    width: 100%;
+
+    @media only screen and (max-width: 1400px) {
+        flex-basis: 20%;
+        flex-wrap: wrap;
+    }
 `
 
+const FlexingCol2 = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding-top: 45px;
+    gap: 60px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
 
-const PositionCelsius = styled.div`
-   position: absolute;
-   top: 200px;
-   align-items: center;
+    @media only screen and (max-width: 1400px) {
+        flex-basis: 20%;
+        flex-wrap: wrap;
+    }
 `
 
 const Celsius = styled.div`
-    color: white;
+    color: black;
     font-size: 90px;
     font-weight: 300;
 `
 
-const LittleCelsius = styled.div`
-    padding-top: 42px;
-    margin-left: -15px;
-    color: white;
-    font-size: 35px;
-    font-weight: 300;
-    font-family: sans-serif !important;
-`
+const AnotherFlex = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+    width: 500px;
+    
+    padding: 30px;
+    border-radius: 15px;
+    background-color: rgba(255,255,255,0.8);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
-const LittleCel = styled.div`
-`
-
-const PositionDay = styled.div`
-    position: absolute;
-    top: 300px;
-    align-items: center;
+    @media only screen and (max-width: 600px) {
+        width: 100%;
+    }
 `
 
 const Day = styled.div`
-    padding-left: 70px;
-    padding-top: 30px;
-
-    color: white;
+    color: darkgray;
     font-size: 24px;
-    font-weight: 300;
+    font-weight: 500;
 `
 
 const PositionCanvas = styled.div`
     position: absolute;
-    top: -120px;
-    left: -65px;
+    top: -80px;
+    left: 40%;
     align-items: center;
     padding: 30px;
 
     @media only screen and (max-width: 1400px) {
         position: absolute;
-        top: 200px;
-        left: -20px;
+        top: 80px;
+        left: 40%;
+        align-items: center;
+        padding: 30px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        position: absolute;
+        top: 80px;
+        left: 100px;
         align-items: center;
         padding: 30px;
     }
 `
 
-const PositionDayInformation = styled.div`
-    position: absolute;
-    top: 1000px;
-    align-items: center;
-    padding: 30px;
+const Section = styled.div`
+    font-size: 21px;
+    font-weight: 400;
+    margin-top: 82px;
+    background: white;
     width: 100%;
+    height: 32px;
+    border-radius: 20px;
+    padding: 0 10px;
+    background-color: rgba(255,255,255,0.8);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    text-align: center;
 `
-
-const Details = styled.div`
-    position: absolute;
-    top: 1400px;
-    color: white;
-    font-size: 22px;
-    font-weight: 300;
-    padding-left: 60px
-`
-
-const PositionDetails = styled.div`
-    position: absolute;
-    top: 1450px;
-    align-items: center;
-    padding: 30px;
-    width: 100%;
-`
-
-const DaysInfo = styled.div`
-    color: white;
-    font-size: 22px;
-    font-weight: 300;
-`
-
-const HourInfo = styled.div`
-    color: white;
-    font-size: 22px;
-    font-weight: 300;
-`
-

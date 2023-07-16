@@ -50,6 +50,10 @@ const Logo = styled.img`
     align-items: center;
     box-shadow: 0px 6px 5px #ccc;
     border-radius:190px;
+
+    @media only screen and (max-width: 600px) {
+        width: 75px;
+    }
 `
 
 const Partner = styled.div`
@@ -59,7 +63,11 @@ const Partner = styled.div`
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
-    color: white;
+    color: black;
+
+    @media only screen and (max-width: 600px) {
+        display: none;
+    }
 `
 const AppName = styled.div`
     text-align: center;
@@ -67,7 +75,7 @@ const AppName = styled.div`
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
-    color: white;
+    color: black;
 `
 
 const Image = styled.img`
@@ -76,4 +84,10 @@ const Image = styled.img`
     border-radius:10px;
     object-fit: cover;
     width: 120px;
+
+    @media only screen and (max-width: 600px) {
+        width: 100%;
+        height: 55px;
+        margin-top: -10px;
+    }
 `
