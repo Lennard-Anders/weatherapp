@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
         <Container>
             <Line />
             <Flex>
-                <AppName><Logo src="/Bilder/Weather360logo.png" width="95" />Weather360</AppName>
+                <AppName><Link to="/"><Logo src="/Bilder/Weather360logo.png" width="95" /></Link>Weather360</AppName>
                 <Flex2>
                     <Partner>
                         Partners:

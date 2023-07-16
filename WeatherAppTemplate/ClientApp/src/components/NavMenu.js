@@ -1,9 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState} from 'react';
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link} from 'react-router-dom';
 
 const NavMenu = () => {
     const navigate = useNavigate();
@@ -12,7 +12,6 @@ const NavMenu = () => {
     const getWeatherForCity = async (city) => {
         try {
             const response = await axios.get(`https://localhost:7210/api/Weather/GetWeatherForCity?city=${city}`);
-
             return response.data;
         } catch (error) {
             console.error('Fehler beim Abrufen der Wetterdaten:', error);
@@ -22,8 +21,12 @@ const NavMenu = () => {
 
     const handleSearch = async () => {
         const data = await getWeatherForCity(searchQuery);
+        if (data === undefined || data === null) {
+            navigate("/error");
+            return;
+        }
         console.log(data);
-        navigate(`/dashboard`, { state: { weatherData: data } });
+        navigate(`/dashboard`, { state: { weatherData: data, searchQuery: searchQuery } });
         // navigate(`/dashboard/${searchQuery}`, { state: { weatherData: data } });
     };
 
@@ -31,7 +34,7 @@ const NavMenu = () => {
         <Navbar>
           <Header>
                 <Flex>
-                    <Logo src="/Bilder/Weather360logo.png" width="95"></Logo>
+                    <Link to="/"><Logo src="/Bilder/Weather360logo.png" width="95"></Logo></Link>
                     <Wrap>
                     <Search>
                             <SearchTerm type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} id="search" placeholder="Geben Sie einen Ort ein!"></SearchTerm>
@@ -40,7 +43,7 @@ const NavMenu = () => {
                             </Button>         
                         </Search>
                     </Wrap>
-                    <Home><HiHome size={32} color="#3B69DE" /></Home>
+                    <Link to="/"><Home><HiHome size={32} color="#3B69DE" /></Home></Link>
                 </Flex>
             </Header>
         </Navbar>

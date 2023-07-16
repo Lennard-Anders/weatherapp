@@ -2,23 +2,45 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import { BsSunrise, BsCloudSun } from "react-icons/bs";
 import { MdSevereCold } from "react-icons/md";
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Sections = () => {
+    const navigate = useNavigate();
+
+    const getWeatherForCity = async (city) => {
+        try {
+            const response = await axios.get(`https://localhost:7210/api/Weather/GetWeatherForCity?city=${city}`);
+            return response.data;
+        } catch (error) {
+            console.error('Fehler beim Abrufen der Wetterdaten:', error);
+            return null;
+        }
+    };
+
+    const handleClick = async (city) => {
+        const data = await getWeatherForCity(city);
+        if (data === undefined || data === null) {
+            navigate("/error");
+            return;
+        }
+        navigate(`/dashboard`, { state: { weatherData: data, searchQuery: city } });
+    }
     return (
         <Container>
             <Label>Temperature's rising<BsCloudSun color="orange" size={24} /></Label>
             <Line />
             <Flex>
-                <Box src="/Bilder/London.png" width="400px"></Box>
-                <Box src="/Bilder/Barcelona.png" width="400px"></Box>
-                <Box src="/Bilder/Istanbul.png" width="400px"></Box>
+                <Button onClick={() => handleClick("London")}><Box src="/Bilder/London.png" width="400px"></Box></Button>
+                <Button onClick={() => handleClick("Barcelona")}><Box src="/Bilder/Barcelona.png" width="400px"></Box></Button>
+                <Button onClick={() => handleClick("Istanbul")}><Box src="/Bilder/Istanbul.png" width="400px"></Box></Button>
             </Flex>
             <Label>It's getting cold here<MdSevereCold color="darkblue" size={24} /></Label>
             <Line />
             <Flex>
-                <Box src="/Bilder/Helsinki.png" width="400px"></Box>
-                <Box src="/Bilder/Oimjakon.png" width="400px"></Box>
-                <Box src="/Bilder/Quebec.png" width="400px"></Box>
+                <Button onClick={() => handleClick("Helsinki")}><Box src="/Bilder/Helsinki.png" width="400px"></Box></Button>
+                <Button onClick={() => handleClick("Winnipeg")}><Box src="/Bilder/Winnipeg.png" width="400px"></Box></Button>
+                <Button onClick={() => handleClick("Quebec")}><Box src="/Bilder/Quebec.png" width="400px"></Box></Button>
             </Flex>
             <Label>We are Worldwide!</Label>
             <Line />
@@ -27,6 +49,12 @@ const Sections = () => {
 };
 
 export default Sections;
+
+
+const Button = styled.button`
+    background-color: transparent;
+    border: none;
+`
 
 const Container = styled.div`
     max-width: 1440px;

@@ -13,26 +13,43 @@ import { useLocation } from 'react-router-dom';
 const WeatherDetails = () => {
     const location = useLocation();
     const weatherData = location.state.weatherData;
+    const name = location.state.searchQuery;
+    const [currTemp, setCurrTemp] = useState(0);
+    const [minTemp, setMinTemp] = useState(0);
+    const [maxTemp, setMaxTemp] = useState(0);
+
+    const [windSpeed, setWindSpeed] = useState(0);
+    const [windDirect, setWindDirect] = useState(0);
+
+    const [rainProb, setRainProb] = useState(0);
+    const [thunderProb, setThunderProb] = useState(0);
+    const [snowProb, setSnowProb] = useState(0);
+
+    const [moonPhase, setMoonPhase] = useState("");
+
+    console.log(weatherData);
     const { searchQuery } = useParams();
-    const [weatherType, setWeatherType] = useState(1);
 
     useEffect(() => {
-        const fetchWeatherData = async () => {
-            try {
-                const response = await axios.get(`API_ENDPOINT/${searchQuery}`);
-                const data = response.data;
-                console.log(data); // Do something with the weather data
-                setWeatherType(data.weatherType); 
-            } catch (error) {
-                console.error('Error fetching weather data:', error);
-            }
-        };
+        setWindSpeed(weatherData[0].day.windGust.speed.value);
+        setWindDirect(weatherData[0].day.windGust.direction.degrees);
+        setMoonPhase(weatherData[0].moon.phase);
+        setRainProb(weatherData[0].day.rainProbability);
+        setThunderProb(weatherData[0].day.thunderstormProbability);
+        setSnowProb(weatherData[0].day.snowProbability);
+    }, [weatherData]);
 
-        fetchWeatherData();
-    }, [searchQuery]);
+    useEffect(() => {
+        setMinTemp(weatherData[0].minTemperature);
+        setMaxTemp(weatherData[0].maxTemperature);
+    }, [weatherData]);
+
+    useEffect(() => {
+        setCurrTemp((minTemp + maxTemp) / 2);
+    }, [minTemp, maxTemp]);
 
     const renderWeatherCanvas = () => {
-        switch (weatherType) {
+        switch (weatherData[0].day.icon) {
             case 1:
                 return <CanvasSunny />;
             case 2:
@@ -126,6 +143,53 @@ const WeatherDetails = () => {
         }
     };
 
+    const [day2, setDay2] = useState("");
+    const [day3, setDay3] = useState("");
+    const [day4, setDay4] = useState("");
+    const [day5, setDay5] = useState("");
+
+    const [currTempDay2, setCurrTempDay2] = useState(0);
+    const [minTempDay2, setMinTempDay2] = useState(0);
+    const [maxTempDay2, setMaxTempDay2] = useState(0);
+
+    const [currTempDay3, setCurrTempDay3] = useState(0);
+    const [minTempDay3, setMinTempDay3] = useState(0);
+    const [maxTempDay3, setMaxTempDay3] = useState(0);
+
+    const [currTempDay4, setCurrTempDay4] = useState(0);
+    const [minTempDay4, setMinTempDay4] = useState(0);
+    const [maxTempDay4, setMaxTempDay4] = useState(0);
+
+    const [currTempDay5, setCurrTempDay5] = useState(0);
+    const [minTempDay5, setMinTempDay5] = useState(0);
+    const [maxTempDay5, setMaxTempDay5] = useState(0);
+
+    useEffect(() => {
+        setMinTempDay2(weatherData[1].minTemperature);
+        setMaxTempDay2(weatherData[1].maxTemperature);
+
+        setMinTempDay3(weatherData[2].minTemperature);
+        setMaxTempDay3(weatherData[2].maxTemperature);
+
+        setMinTempDay4(weatherData[3].minTemperature);
+        setMaxTempDay4(weatherData[3].maxTemperature);
+
+        setMinTempDay5(weatherData[4].minTemperature);
+        setMaxTempDay5(weatherData[4].maxTemperature);
+
+        setDay2(weatherData[1].date);
+        setDay3(weatherData[2].date);
+        setDay4(weatherData[3].date);
+        setDay5(weatherData[4].date);
+    }, [weatherData]);
+
+    useEffect(() => {
+        setCurrTempDay2((minTempDay2 + maxTempDay2) / 2);
+        setCurrTempDay3((minTempDay3 + maxTempDay3) / 2);
+        setCurrTempDay4((minTempDay4 + maxTempDay4) / 2);
+        setCurrTempDay5((minTempDay5 + maxTempDay5) / 2);
+    }, [minTempDay2, minTempDay3, minTempDay4, minTempDay5, maxTempDay2, maxTempDay3, maxTempDay4, maxTempDay5]);
+
     return (
         <>
         <div>
@@ -134,8 +198,8 @@ const WeatherDetails = () => {
                  <FlexingRow>
                     <AnotherFlex>
                         <FlexValue>
-                                <City>London</City>
-                                <Celsius>31
+                                <City>{name}</City>
+                                <Celsius>{currTemp.toFixed(1)}
                                     <VscCircleSmall size={50} color="black" />
                                 C</Celsius>
                         </FlexValue>
@@ -144,40 +208,51 @@ const WeatherDetails = () => {
                  <Section>Weather details</Section>
                  <FlexingCol>
                     <Information>
-                        Wind
+                        Wind direction
+                        <InfoDetail>{windDirect} deg.</InfoDetail>
                     </Information>
                     <Information>
-                        Humidity
+                        Wind Speed
+                        <InfoDetail>{windSpeed} km/h</InfoDetail>
                     </Information>
                     <Information>
-                        Dew Point
+                        Rain Probability
+                        <InfoDetail>{rainProb}%</InfoDetail>
                     </Information>
                     <Information>
-                        Pressure
+                        Snow Probability
+                        <InfoDetail>{snowProb}%</InfoDetail>
                     </Information>
                     <Information>
-                        UV Index
+                        Thunder Probability
+                        <InfoDetail>{thunderProb}%</InfoDetail>
                     </Information>
                     <Information>
                         Moon Phase
+                        <InfoDetail>{moonPhase}</InfoDetail>
                     </Information>
                  </FlexingCol>
                  <Section>Weather in the next days</Section>
                  <FlexingCol2>
-                        <Information>
-                            Tomorrow
+                            <Information>
+                            Today
+                            <InfoDetail>{currTemp.toFixed(1)} Celsius</InfoDetail>
+                        </Information>
+                            <Information>
+                            {new Date(day2).toLocaleDateString('de-DE')}
+                            <InfoDetail>{currTempDay2.toFixed(1)} Celsius</InfoDetail>
                         </Information>
                         <Information>
-                            17.07.23
+                            {new Date(day3).toLocaleDateString('de-DE')}
+                            <InfoDetail>{currTempDay3.toFixed(1)} Celsius</InfoDetail>
                         </Information>
                         <Information>
-                            18.07.23
+                            {new Date(day4).toLocaleDateString('de-DE')}
+                            <InfoDetail>{currTempDay4.toFixed(1)} Celsius</InfoDetail>
                         </Information>
                         <Information>
-                            19.07.23
-                        </Information>
-                        <Information>
-                            20.07.23
+                            {new Date(day5).toLocaleDateString('de-DE')}
+                            <InfoDetail>{currTempDay5.toFixed(1)} Celsius</InfoDetail>
                         </Information>
                  </FlexingCol2>
                 </FlexingRow>
@@ -208,6 +283,13 @@ const Div = styled.div`
     top: 150px;
     width: 100%;
     padding-bottom: 25px;
+`
+
+const InfoDetail = styled.div`
+    position: relative;
+    top: 55px;
+    font-size: 24px;
+    color: black
 `
 
 const City = styled.div`
