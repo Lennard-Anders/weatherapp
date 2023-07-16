@@ -10,7 +10,6 @@ export default function WeatherDetail() {
         <div>
             <NavMenu />
             <WeatherDetails />
-            <Footer />
         </div>
     )
 };

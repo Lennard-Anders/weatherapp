@@ -129,7 +129,6 @@ const WeatherDetails = () => {
     return (
         <>
         <div>
-            <Farbe>
             <Image src="/Bilder/WeatherDetail.png" />
             <Div>
                  <FlexingRow>
@@ -186,7 +185,6 @@ const WeatherDetails = () => {
             <PositionCanvas>
                 {renderWeatherCanvas()}
             </PositionCanvas>
-            </Farbe>
             </div>
         </>
     )
@@ -209,20 +207,18 @@ const Div = styled.div`
     position: absolute;
     top: 150px;
     width: 100%;
-`
-
-const Farbe = styled.div`
-    @media only screen and (max-width: 1400px) {
-        background: #7AA8B2;
-        width: 100%;
-        height: 182vh;
-    }
+    padding-bottom: 25px;
 `
 
 const City = styled.div`
     color: black;
     font-size: 30px;
     font-weight: 500;
+
+    
+    @media only screen and (max-width: 1400px) {
+        color: white;
+    }
 `
 
 const FlexValue = styled.div`
@@ -242,9 +238,13 @@ const Information = styled.div`
 
     @media only screen and (max-width: 1400px) {
         width: 200px;
+        background-color: rgba(123, 169, 178, 1);
+        color: white;
     }
     @media only screen and (max-width: 600px) {
         width: 150px;
+        background-color: rgba(123, 169, 178, 1);
+        color: white;
     }
 `
 
@@ -290,6 +290,11 @@ const Celsius = styled.div`
     color: black;
     font-size: 90px;
     font-weight: 300;
+
+    
+    @media only screen and (max-width: 1400px) {
+        color: white;
+    }
 `
 
 const AnotherFlex = styled.div`
@@ -303,8 +308,10 @@ const AnotherFlex = styled.div`
     background-color: rgba(255,255,255,0.8);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 1400px) {
         width: 100%;
+        background-color: rgba(123, 169, 178, 1);
+        color: white;
     }
 `
 
@@ -312,6 +319,10 @@ const Day = styled.div`
     color: darkgray;
     font-size: 24px;
     font-weight: 500;
+
+    @media only screen and (max-width: 1400px) {
+        color: white;
+    }
 `
 
 const PositionCanvas = styled.div`
@@ -350,4 +361,9 @@ const Section = styled.div`
     background-color: rgba(255,255,255,0.8);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     text-align: center;
+
+    @media only screen and (max-width: 1400px) {
+        color: white;
+        background-color: rgba(123, 169, 178, 1);
+    }
 `
